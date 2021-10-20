@@ -1,24 +1,49 @@
 const catchAsyncErrors = require('../utils/catch_async_errors');
+const Account = require('../schemas/account_schema');
+const { generateJwt } = require('../utils');
 
-const signup = catchAsyncErrors((req, res, next) => {});
+const signup = catchAsyncErrors(async (req, res, next) => {
+  // try to find if account already exist
+  let account = await Account.findOne({ email: req.body.email });
 
-const signin = catchAsyncErrors((req, res, next) => {});
+  if (account) {
+    return;
+  }
 
-const signout = catchAsyncErrors((req, res, next) => {});
+  // create new account
+  const account = new Account(req.body);
+  // try saving newly created account
+  await account.save();
 
-const changePassword = catchAsyncErrors((req, res, next) => {});
+  // generate an auth token for this account and save it to our DB
+  const authToken = generateJwt(account.id);
 
-const forgotPassword = catchAsyncErrors((req, res, next) => {});
+  account.auth_token = authToken;
 
-const updateMyAccount = catchAsyncErrors((req, res, next) => {});
+  await account.save();
 
-const deleteMyAccount = catchAsyncErrors((req, res, next) => {});
+  res.setHeader('auth_token', authToken);
 
-const forgotMyPassword = catchAsyncErrors((req, res, next) => {});
+  res.json({ account });
+});
 
-const resetMyPassword = catchAsyncErrors((req, res, next) => {});
+const signin = catchAsyncErrors(async (req, res, next) => {});
 
-const pullMyAccount = catchAsyncErrors((req, res, next) => {});
+const signout = catchAsyncErrors(async (req, res, next) => {});
+
+const changePassword = catchAsyncErrors(async (req, res, next) => {});
+
+const forgotPassword = catchAsyncErrors(async (req, res, next) => {});
+
+const updateMyAccount = catchAsyncErrors(async (req, res, next) => {});
+
+const deleteMyAccount = catchAsyncErrors(async (req, res, next) => {});
+
+const forgotMyPassword = catchAsyncErrors(async (req, res, next) => {});
+
+const resetMyPassword = catchAsyncErrors(async (req, res, next) => {});
+
+const pullMyAccount = catchAsyncErrors(async (req, res, next) => {});
 
 module.exports = {
   signup,
