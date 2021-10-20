@@ -19,3 +19,16 @@ const forgotMyPassword = catchAsyncErrors((req, res, next) => {});
 const resetMyPassword = catchAsyncErrors((req, res, next) => {});
 
 const pullMyAccount = catchAsyncErrors((req, res, next) => {});
+
+module.exports = {
+  signup,
+  signin,
+  signout,
+  changePassword,
+  forgotPassword,
+  updateMyAccount,
+  deleteMyAccount,
+  forgotMyPassword,
+  resetMyPassword,
+  pullMyAccount
+};
