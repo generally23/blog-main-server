@@ -20,12 +20,6 @@ const accountSchema = new mongoose.Schema(
       minlength: [8]
     },
 
-    confirmation_password: {
-      type: String,
-      required: [true],
-      minlength: [8]
-    },
-
     reset_token: {
       type: String
     },
