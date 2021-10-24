@@ -1,14 +1,20 @@
 const router = require('express').Router();
-const comment_router = require('./comment_route_handlers');
+const comment_router = require('./comment_router');
+
+const {
+  getPosts,
+  getPost,
+  createPost
+} = require('../routeHandlers/post_route_handlers');
 
 const parent_route = '/posts';
 router
   .route(`${parent_route}`)
-  .get()
-  .post();
+  .get(getPosts)
+  .post(createPost);
 
-router.route(`${parent_route}/:post_name`).get();
+router.route(`${parent_route}/:post_title`).get(getPost);
 
-router.use(`${parent_route}/:post_name/comments`, comment_router);
+router.use(`${parent_route}/:post_title/comments`, comment_router);
 
 module.exports = router;
