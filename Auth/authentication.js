@@ -2,6 +2,7 @@ const {verify} = require('jsonwebtoken');
 const Account = require('../Schemas/account_schema');
 
 const authenticate =  async (req, res, next) => {
+    
     // get token
     const token = req.headers.get('Authorization');
 
