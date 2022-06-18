@@ -4,7 +4,7 @@ const commentSchema = new mongoose.Schema(
   {
     content: {
       type: String,
-      minlength: [1]
+      minlength: [1, 'field {content} cannot be less than 1 character']
     }, 
     author_id: {
       type: mongoose.Schema.Types.ObjectId

@@ -14,7 +14,7 @@ const accountSchema = new mongoose.Schema(
     email: {
       type: String,
       required: [true, 'field {email} is required'],
-      unique: [true, 'this email already exist']
+      unique: [true, 'email already exist']
     },
 
     type: {
