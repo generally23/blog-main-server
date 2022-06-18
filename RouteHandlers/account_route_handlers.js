@@ -67,7 +67,7 @@ const signin = catchAsyncErrors(async (req, res, next) => {
 
 const signout = catchAsyncErrors(async (req, res, next) => {
   const { account } = req.account;
-  
+
   objectAssign({ auth_token: undefined }, account);
 
   await account.save();
@@ -170,6 +170,8 @@ const resetMyPassword = catchAsyncErrors(async (req, res, next) => {
   objectAssign({ auth_token: authToken }, account);
 
   await account.save();
+
+  res.setHeader('auth_token', authToken);
 
   res.json({ account });
 });
