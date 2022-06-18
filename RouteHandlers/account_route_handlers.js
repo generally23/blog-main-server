@@ -67,6 +67,7 @@ const signin = catchAsyncErrors(async (req, res, next) => {
 
 const signout = catchAsyncErrors(async (req, res, next) => {
   const { account } = req.account;
+  
   objectAssign({ auth_token: undefined }, account);
 
   await account.save();

@@ -16,6 +16,9 @@ const parent_route = '/accounts';
 
 router.post(`${parent_route}/signup`, signup);
 
+/*
+Authed
+*/
 router.post(`${parent_route}/signin`, signin);
 
 router.post(`${parent_route}/signout`, signout);
