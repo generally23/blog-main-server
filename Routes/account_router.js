@@ -31,7 +31,7 @@ router.patch(`${parent_route}/reset-password/:reset_token`, resetMyPassword);
 
 router.patch(`${parent_route}/change-my-password`, changeMyPassword);
 
-router.post(`${parent_route}/update-my-account`, updateMyAccount);
+router.patch(`${parent_route}/update-my-account`, updateMyAccount);
 
 router.delete(`${parent_route}/delete-my-account`, deleteMyAccount);
 
