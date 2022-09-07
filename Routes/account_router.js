@@ -1,4 +1,8 @@
-const router = require('express').Router();
+const router = require("express").Router();
+const { uploader } = require("../Utils/index");
+const authenticate = require("../Auth/authentication");
+
+//console.log(uploader);
 
 const {
   signup,
@@ -9,30 +13,46 @@ const {
   deleteMyAccount,
   forgotMyPassword,
   resetMyPassword,
-  pullMyAccount
-} = require('../RouteHandlers/account_route_handlers');
+  pullMyAccount,
+} = require("../RouteHandlers/account_route_handlers");
 
-const parent_route = '/accounts';
+const parent_route = "/accounts";
 
 router.post(`${parent_route}/signup`, signup);
 
-/*
-Authed
-*/
+/** AUTHENTICATED */
+
+router.post(`${parent_route}/signout`, authenticate, signout);
+
+router.get(`${parent_route}/my-account`, authenticate, pullMyAccount);
+
+/** NOT AUTHENTICATED */
+
 router.post(`${parent_route}/signin`, signin);
-
-router.post(`${parent_route}/signout`, signout);
-
-router.get(`${parent_route}/my-account`, pullMyAccount);
 
 router.post(`${parent_route}/forgot-my-password`, forgotMyPassword);
 
-router.patch(`${parent_route}/reset-password/:reset_token`, resetMyPassword);
+router.patch(`${parent_route}/reset-password/:resetToken`, resetMyPassword);
 
-router.patch(`${parent_route}/change-my-password`, changeMyPassword);
+/** AUTHENTICATED */
 
-router.patch(`${parent_route}/update-my-account`, updateMyAccount);
+router.patch(
+  `${parent_route}/change-my-password`,
+  authenticate,
+  changeMyPassword
+);
 
-router.delete(`${parent_route}/delete-my-account`, deleteMyAccount);
+router.patch(
+  `${parent_route}/update-my-account`,
+  authenticate,
+  uploader().any(),
+  updateMyAccount
+);
+
+router.delete(
+  `${parent_route}/delete-my-account`,
+  authenticate,
+  deleteMyAccount
+);
 
 module.exports = router;
